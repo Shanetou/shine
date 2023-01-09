@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import SunCalc from "suncalc";
+console.log("SunCalc:", SunCalc);
 
 const ONE_HOUR = 3.6e6;
 const TWO_MINUTES = 120000;
@@ -47,4 +49,17 @@ export const useGeolocaton = (): [
   }, []);
 
   return [isLoading, position, error];
+};
+
+export const useSunPosition = (latitude: number, longitude: number) => {
+  const ref = useRef(new Date());
+  console.log("ref:", ref);
+
+  const { sunrise, sunset } = SunCalc.getTimes(
+    ref.current,
+    latitude,
+    longitude
+  );
+  console.log("sunset:", sunset);
+  console.log("sunrise:", sunrise);
 };
